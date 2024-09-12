@@ -12,7 +12,11 @@ const onUserChangeHandler = async (
 
     try {
       const userAnonymized = getAnonymizedUserHelper(user)
-      await new UserAnonymizedModel(userAnonymized).save()
+      await UserAnonymizedModel.updateOne(
+        { _id: userAnonymized._id },
+        { $set: userAnonymized },
+        { $upsert: true }
+      )
 
       console.log("[info]: User has been anonymized successfully")
     } catch (err) {

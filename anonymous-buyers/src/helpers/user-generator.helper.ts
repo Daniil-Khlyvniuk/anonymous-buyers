@@ -22,7 +22,7 @@ const mockUser = (): IUser => {
 }
 
 export const generateUsers = (count?: number): IUser[] => {
-  count = count || Math.floor(Math.random() * 10) + 1
+  count = (!!count && Math.max(1, count)) || Math.floor(Math.random() * 10) + 1
 
   return Array(count).fill(mockUser())
 }

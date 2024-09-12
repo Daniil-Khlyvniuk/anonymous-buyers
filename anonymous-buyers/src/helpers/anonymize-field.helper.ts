@@ -6,5 +6,5 @@ export const anonymizeField = (
 ): string => {
   const hash = SHA256(inputString).toString()
 
-  return outputLength ? hash.substring(0, outputLength) : hash
+  return hash.substring(0, Math.min(outputLength, hash.length) || 1)
 }

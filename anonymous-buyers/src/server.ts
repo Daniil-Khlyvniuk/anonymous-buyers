@@ -1,19 +1,19 @@
 import express from "express"
 import mongoose from "mongoose"
 import { config } from "dotenv"
-import { initOnUserChangeListenerJob, initSettingUsersLoop } from "jobs"
+import { initOnUserChangeListenerJob, initSettingUsersLoopJob } from "jobs"
 
 config()
 
-const PORT = process.env.PORT || "5000"
+const PORT = process.env.PORT || "4000"
 const DB_URI = process.env.DB_URI || ""
 const app = express()
 
-const bootstrap = async (): Promise<void> => {
-  console.log(`Server running on port ${PORT}`)
+export const bootstrap = async (): Promise<void> => {
+  console.log(`[INFO]: Server running on port ${PORT}`)
 
   await initOnUserChangeListenerJob()
-  void initSettingUsersLoop()
+  await initSettingUsersLoopJob()
 }
 
 mongoose

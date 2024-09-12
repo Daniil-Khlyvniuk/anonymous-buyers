@@ -1,7 +1,9 @@
 import { userService } from "services"
 
-export const initSettingUsersLoopJob = async (): Promise<void> => {
+export const initSettingUsersLoopJob = async (
+  timer: number = 200
+): Promise<ReturnType<typeof setTimeout>> => {
   await userService.saveUsers()
 
-  setTimeout(initSettingUsersLoopJob, 200)
+  return setTimeout(initSettingUsersLoopJob, timer)
 }

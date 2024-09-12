@@ -1,7 +1,7 @@
 import { type IUser } from "types"
-import { anonymizeFieldHelper } from "helpers/index"
+import { anonymizeFieldHelper } from "helpers"
 
-export const getAnonymizedUser = (userDto: IUser): IUser => {
+export const getAnonymizedUser = (userDto: IUser): IUser & { _id?: string } => {
   return {
     ...userDto,
     firstName: anonymizeFieldHelper(userDto.firstName),

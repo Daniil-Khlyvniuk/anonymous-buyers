@@ -7,7 +7,7 @@ Task details you can see [here](https://topcreator.notion.site/Middle-Senior-Bac
 Before you begin, ensure you have the following installed on your local machine:
 
 - [Docker](https://www.docker.com/products/docker-desktop) (including Docker Compose)
-- [Node.js](https://nodejs.org/) (if you need to work with the code locally)
+- [Node.js v20](https://nodejs.org/) (if you need to work with the code locally)
 - [npm](https://www.npmjs.com/get-npm)  (for managing dependencies)
 
 ## Getting Started

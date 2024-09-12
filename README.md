@@ -20,7 +20,7 @@ cd anonymous-buyers
 ```
 
 ### Configuration
-Make sure to create a .env file in the root directory based on the .env.template file provided. This file will contain environment-specific variables used by Docker Compose.
+Make sure to create a `.env` file in the root directory based on the `.env.template` file provided. This file will contain environment-specific variables used by Docker Compose.
 
 ### Docker Compose Setup
 1. Build and Start Containers

@@ -4,7 +4,7 @@ import { generateUsersHelper, getAnonymizedUserHelper } from "helpers"
 import { type IUser } from "types"
 
 const onUserChangeHandler = async (
-  change: ChangeStreamDocument<IUser>
+  change: ChangeStreamDocument<IUser & { _id: string }>
 ): Promise<void> => {
   if (change.operationType === "insert" || change.operationType === "update") {
     const user = change.fullDocument
@@ -12,10 +12,10 @@ const onUserChangeHandler = async (
 
     try {
       const userAnonymized = getAnonymizedUserHelper(user)
-      await UserAnonymizedModel.updateOne(
-        { _id: userAnonymized._id },
+      await UserAnonymizedModel.findOneAndUpdate(
+        { _id: user._id },
         { $set: userAnonymized },
-        { $upsert: true }
+        { upsert: true, new: true }
       )
 
       console.log("[info]: User has been anonymized successfully")

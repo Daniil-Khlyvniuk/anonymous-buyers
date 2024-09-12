@@ -7,7 +7,7 @@ import { type IUser } from "types"
 jest.mock("models", () => {
   return {
     UserAnonymizedModel: {
-      updateOne: jest.fn()
+      findOneAndUpdate: jest.fn()
     },
     UserModel: {
       insertMany: jest.fn()
@@ -51,10 +51,10 @@ describe("User service", () => {
     it("should anonymize and save a user when the change operation is insert or update", async () => {
       /* eslint-disable */
 	    // @ts-ignore
-      const mockUser = { firstName: "1", lastName: "User1" } as IUser
+      const mockUser = { firstName: "1", lastName: "User1", _id: "qwe" } as IUser & { _id: string; }
 	    /* eslint-disable */
 	    // @ts-ignore
-			const mockChange: ChangeStreamDocument<IUser> = {
+			const mockChange: ChangeStreamDocument<IUser & { _id: string; }> = {
 					operationType: "insert",
 					fullDocument: mockUser
 				}
@@ -67,12 +67,12 @@ describe("User service", () => {
 			await userService.onUserChangeHandler(mockChange)
 
 	    const saveUsersMock = jest
-		    .spyOn(UserAnonymizedModel, "updateOne")
+		    .spyOn(UserAnonymizedModel, "findOneAndUpdate")
 		    .mockResolvedValue(mockUser as any)
 
 	    const error = new Error("InsertMany failed")
 
-	    ;(UserAnonymizedModel.updateOne as jest.Mock).mockRejectedValue(error)
+	    ;(UserAnonymizedModel.findOneAndUpdate as jest.Mock).mockRejectedValue(error)
 
 
 			expect(getAnonymizedUserHelper).toHaveBeenCalledWith(mockUser)
@@ -82,11 +82,11 @@ describe("User service", () => {
 		it("should throw an error if anonymizing or saving user fails", async () => {
 			/* eslint-disable */
 			// @ts-ignore
-			const mockUser = { firstName: "1", lastName: "User1" } as IUser
+			const mockUser = { firstName: "1", lastName: "User1", _id: "qwe" } as IUser & { _id: string; }
 
 			/* eslint-disable */
 			// @ts-ignore
-			const mockChange: ChangeStreamDocument<IUser> = {
+			const mockChange: ChangeStreamDocument<IUser & { _id: string; }> = {
 					operationType: "insert",
 					fullDocument: mockUser
 				}
@@ -94,7 +94,7 @@ describe("User service", () => {
 			;(getAnonymizedUserHelper as jest.Mock).mockReturnValue({})
 
 
-			;(UserAnonymizedModel.updateOne as jest.Mock).mockRejectedValue(
+			;(UserAnonymizedModel.findOneAndUpdate as jest.Mock).mockRejectedValue(
 				new Error("Error: Save failed")
 			)
 
@@ -106,14 +106,14 @@ describe("User service", () => {
 		it("should do nothing if the change operation is neither insert nor update", async () => {
 			/* eslint-disable */
 			// @ts-ignore
-			const mockChange: ChangeStreamDocument<IUser> = {
+			const mockChange: ChangeStreamDocument<IUser & { _id: string; }> = {
 				operationType: "delete"
 			}
 
 			await userService.onUserChangeHandler(mockChange)
 
 			expect(getAnonymizedUserHelper).not.toHaveBeenCalled()
-			expect(UserAnonymizedModel.updateOne).not.toHaveBeenCalled()
+			expect(UserAnonymizedModel.findOneAndUpdate).not.toHaveBeenCalled()
 		})
 	})
 })

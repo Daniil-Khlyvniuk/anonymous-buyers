@@ -31,7 +31,7 @@ To build and start the containers, use the following command:
     This command will build the Docker images as specified in the `Dockerfile` and start the containers defined in `docker-compose.yml`.
 
 2. Accessing the Application
-   - By default, the Express server will be accessible at `http://localhost:5000`. 
+   - By default, the Express server will be accessible at `http://localhost:4000`. 
    - MongoDB will be running on `mongodb://host.docker.internal:27017/?replicaSet=rs0`.
 
 3. Stopping Containers

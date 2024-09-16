@@ -42,7 +42,7 @@ To build and start the containers, use the following command:
 ## Development
 1. Running Tests
 
-   To run the tests, ensure the containers are up and use:
+   To run the tests, from root directory use:
     ```bash
     cd anonymous-buyers && npm run test
     ```

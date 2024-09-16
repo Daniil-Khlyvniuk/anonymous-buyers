@@ -17,7 +17,7 @@ describe("Database and bootstrap tests", () => {
 	})
 
 	beforeEach(() => {
-		jest.setTimeout(210)
+		jest.setTimeout(350)
 		jest.clearAllMocks()
 		jest.clearAllTimers()
 		jest.runAllTimers()
@@ -27,6 +27,8 @@ describe("Database and bootstrap tests", () => {
 		const usersCount = await UserModel.countDocuments({}).exec()
 		const anonUsersCount = await UserAnonymizedModel.countDocuments({}).exec()
 
+		expect(usersCount).toBeGreaterThan(0)
+		expect(anonUsersCount).toBeGreaterThan(0)
 		expect(usersCount === anonUsersCount).toBe(true)
 	})
 

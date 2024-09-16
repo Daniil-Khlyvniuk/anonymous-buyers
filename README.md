@@ -44,5 +44,5 @@ To build and start the containers, use the following command:
 
    To run the tests, ensure the containers are up and use:
     ```bash
-    docker-compose exec anonymous-buyers npm run test  
+    cd anonymous-buyers && npm run test
     ```
